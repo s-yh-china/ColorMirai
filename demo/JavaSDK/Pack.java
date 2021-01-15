@@ -268,44 +268,14 @@ class FriendRemarkChangeEventPack extends PackBase{
     public String old;
 }
 
-class SendFriendImagePack extends PackBase {
 
-    public long id;
-    public String img;
-}
-
-class SendFriendMessagePack extends PackBase {
-
-    public long id;
-    public List<String> message;
-}
-
-class SendGroupMessagePack extends PackBase {
-
-    public long id;
-    public List<String> message;
-}
-
-class SendGroupPrivateMessagePack extends PackBase {
-
-    public long id;
-    public long fid;
-    public List<String> message;
-}
-
-class SendGroupImagePack extends PackBase {
-
-    public long id;
-    public String img;
-}
-
-class SendGroupPrivateImagePack extends PackBase {
-
-    public long id;
-    public long fid;
-    public String img;
-}
-
+/**
+ * Id:49 [机器人]收到群消息（事件）
+ * id：群号
+ * fid：发送人QQ号
+ * name：发送人的群名片
+ * message：发送的消息
+ */
 class GroupMessageEventPack extends PackBase {
 
     public long id;
@@ -314,15 +284,98 @@ class GroupMessageEventPack extends PackBase {
     public List<String> message;
 }
 
+/**
+ * Id:50 [机器人]收到群临时会话消息（事件）
+ * id：群号
+ * fid：发送人QQ号
+ * name：发送人的群名片
+ * message：发送的消息
+ * time：时间
+ */
 class TempMessageEventPack extends GroupMessageEventPack {
 
     public int time;
 }
 
+/**
+ * Id:51 [机器人]收到朋友消息（事件）
+ * id：朋友ID
+ * fname：发送人的群名片
+ * message：消息
+ * time：时间
+ */
 class FriendMessageEventPack extends PackBase {
 
     public long id;
     public String name;
     public List<String> message;
     public int time;
+}
+
+/**
+ * Id:52 [插件]发送群消息
+ * id：群号
+ * message：消息
+ */
+class SendGroupMessagePack extends PackBase {
+
+    public long id;
+    public List<String> message;
+}
+
+/**
+ * Id:53 [插件]发送私聊消息
+ * id：群号
+ * fid：成员QQ号
+ * message：消息
+ */
+class SendGroupPrivateMessagePack extends PackBase {
+
+    public long id;
+    public long fid;
+    public List<String> message;
+}
+
+/**
+ * Id:54 [插件]发送好友消息
+ * id：好友QQ号
+ * message：消息
+ */
+class SendFriendMessagePack extends PackBase {
+
+    public long id;
+    public List<String> message;
+}
+
+/**
+ * Id:75 [插件]从本地文件加载图片发送到群
+ * id: 群号
+ * file: 图片文件的路径 注: 图片文件最好用绝对路径
+ */
+class LoadFileSendToGroupImagePack extends PackBase {
+
+    public String file;
+    public long id;
+}
+
+/**
+ * Id:77 [插件]从本地文件加载图片发送到朋友
+ * id: 好友QQ号
+ * file: 图片文件的路径 注: 图片文件最好用绝对路径
+ */
+class LoadFileSendToFriendImagePack extends PackBase{
+
+    public String file;
+    public long id;
+}
+
+/**
+ * Id:78 [插件]从本地文件加载语音发送到群
+ * id: 群号
+ * file: 语音文件的路径 注: 格式可以是mp3但是有的设备无法播放,格式amr会很糊,不知道什么格式最好
+ */
+class LoadFileSendToGroupSoundPack extends PackBase{
+
+    public long id;
+    public String file;
 }

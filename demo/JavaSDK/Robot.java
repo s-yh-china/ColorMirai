@@ -7,7 +7,6 @@ import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 
@@ -100,7 +99,6 @@ public class Robot extends Thread {
         ReadThread.start();
 
         IsRun = true;
-        //readTest();
     }
 
     private static boolean is() {
@@ -109,16 +107,6 @@ public class Robot extends Thread {
             return false;
         } catch (Exception ex) {
             return true;
-        }
-    }
-
-    private void readTest() {
-
-        Scanner scanner = new Scanner(System.in);
-        while (true) {
-            sendGroupMessage(571239090, new ArrayList<String>() {{
-                add(scanner.nextLine());
-            }});
         }
     }
 
@@ -172,19 +160,31 @@ public class Robot extends Thread {
         QueueSend.add(data);
     }
 
-    public void sendGroupImage(long id, String img) {
-        var data = BuildPack.BuildImage(Robot.qq, id, 0, img, 61);
-        QueueSend.add(data);
+    public void sendGroupImageFromFile(long id_, String file_){
+        var date = BuildPack.Build(new LoadFileSendToGroupImagePack(){{
+            qq = Robot.qq;
+            id = id_;
+            file = file_;
+        }}, 75);
+        QueueSend.add(date);
     }
 
-    public void sendGroupPrivateImage(long id, long fid, String img) {
-        var data = BuildPack.BuildImage(Robot.qq, id, fid, img, 62);
-        QueueSend.add(data);
+    public void sendFriendImageFromFile(long id_, String file_){
+        var date = BuildPack.Build(new LoadFileSendToFriendImagePack(){{
+            qq = Robot.qq;
+            id = id_;
+            file = file_;
+        }}, 77);
+        QueueSend.add(date);
     }
 
-    public void sendFriendImage(long id, String img) {
-        var data = BuildPack.BuildImage(Robot.qq, id, 0, img, 63);
-        QueueSend.add(data);
+    public void sendGroupSoundFromFile(long id_, String file_){
+        var date = BuildPack.Build(new LoadFileSendToGroupSoundPack(){{
+            qq = Robot.qq;
+            id = id_;
+            file = file_;
+        }}, 78);
+        QueueSend.add(date);
     }
 
     public void end() { //关闭机器人
